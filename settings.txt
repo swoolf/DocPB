@@ -1,0 +1,15 @@
+[folders]
+driveFolder = Moo
+driveExt = M
+
+[settings]
+countdown = 1
+internetEnabled = False
+send2printer = False
+
+[prompts]
+prompt0 = Take a practice picture!
+prompt1 = First, A close up on your project:
+prompt2 = Now, show me a different view of your project!
+prompt3 = Next, point to the coolest part of your project
+prompt4 = Now, a picture of the team

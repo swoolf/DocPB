@@ -19,12 +19,16 @@ import os
 from apiclient import discovery
 from apiclient.http import MediaFileUpload
 
-#check internet connection
-internetOn = driveFuncs.internet_on()
-
 #read settings file
 config = ConfigParser.ConfigParser()
 config.read('settings.txt')
+
+#check internet connection
+if ('False' == config.get('settings','internetEnabled')):
+    internetOn = False
+else: internetOn = driveFuncs.internet_on()
+    
+print 'internetOn? ' + str(internetOn)
 
 #Settings:
 printCollage = True
@@ -33,7 +37,8 @@ archiveDir='prints/'
 toUploadDir = 'notUploaded/'
 countdown = int(config.get('settings','countdown'))#seconds for countdown
 inDev = False 
-showCaption = True
+if True == config.get('settings','showCaption'): showCaption = True
+else: showCaption = False
 aspectRatio = 1.0*4/3
 
 #Google Drive Settings
@@ -278,6 +283,7 @@ def AssAndPrint(): #assembles collage and prints it
         if groupName == "" or groupDescription == "":
             dash = ""
         else: dash = " - "
+    else: captionOn=False
         
     if captionOn: 
         iheight = 450
@@ -312,13 +318,13 @@ def AssAndPrint(): #assembles collage and prints it
         title.thumbnail((1000,1000))
         title=title.rotate(90)
         #thumbnail the 4 images 
-        for i in range (1,5):
+        for i in range (0,4):
             images[i].thumbnail((640,480))
 
-        forPrint.paste(images[1],(20,10))
-        forPrint.paste(images[2],(20,30+480))
-        forPrint.paste(images[3],(40+640,10))
-        forPrint.paste(images[4],(40+640,30+480))
+        forPrint.paste(images[0],(20,10))
+        forPrint.paste(images[1],(20,30+480))
+        forPrint.paste(images[2],(40+640,10))
+        forPrint.paste(images[3],(40+640,30+480))
         forPrint.paste(title,(50+640*2,10))
     
     if not os.path.exists(archiveDir): 
@@ -349,10 +355,15 @@ def sendToPrinter():
     global numPrints
     conn = cups.Connection()
     printers = conn.getPrinters()
-    printer_name = printers.keys()[0]
-    
-    if numPrints != 0:
-        conn.printFile(printer_name,archiveDir+'temp.jpg',"PhotoBooth",{"copies": str(numPrints)})
+#    printer_name = printers.keys()[0]
+
+    for name in printers.keys():
+        if ('selphy' in name.lower()):
+            printer_name = name
+            if numPrints != 0:
+                conn.printFile(printer_name,archiveDir+'temp.jpg',"PhotoBooth",{"copies": str(numPrints)})
+                return
+    print "I can't find the printer..."
     return
 
 def timer():
@@ -468,8 +479,10 @@ def main(threadName, *args):
             if state == 4.3:
                 if 'True' == config.get('settings','send2printer'): 
                     sendToPrinter()
-                    print 'no print'
-                Message4="Sent to Printer. Click SpaceBar to restart"
+                    if numPrints ==0:
+                        Message4="Picture Saved, Click SpaceBar to restart"
+                    else: Message4="Sent to Printer. Click SpaceBar to restart"
+                else: Message4="Picture Saved, Click SpaceBar to restart"
                 state=4.5
                 
                 
@@ -484,7 +497,7 @@ def watchInput(threadName, *args):
     while not exitFlag:
         clock.tick(30)
         ms=clock.get_time()
-        if ms > 500: print str(ms) + ' ' + str(state)
+#        if ms > 500: print str(ms) + ' ' + str(state)
         events = pygame.event.get()
         
         for event in events:
@@ -493,7 +506,10 @@ def watchInput(threadName, *args):
                         exitFlag=1
                     if event.key == pygame.K_SPACE:
                         if state ==0: 
-                            state = 1 
+                            if config.get('settings','showCaption') == 'False':
+                                state = 3.1
+                            else:
+                                state = 1 
                             clearScreen() 
                         if state==4.5:
                             clearScreen()

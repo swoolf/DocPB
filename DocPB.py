@@ -468,9 +468,8 @@ def main(threadName, *args):
                 UpdateDisplay()
                 AssAndPrint()
                 clearScreen()
-                if not printCollage: 
-                    Message4="Printing Currently disabeld. Click SpaceBar to restart"
-                    state = 4.5
+                if 'False' == config.get('settings','send2printer'):
+                    state = 4.3
                 else: state = 4.2 #Message4="Sent to Printer. Click SpaceBar to restart"
                 showLastCollage= True
                 UpdateDisplay()

@@ -54,7 +54,10 @@ pygame.mouse.set_visible(False)
 green = 0, 204, 0
 red= 204,0,0
 blue= 51,51,255
-black = 32, 32, 32
+grey1=188,190,192
+grey2=109,110,113
+grey3=88,89,91
+black = 55,57,58
 white= 250,250,250
 screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 (mon_w, mon_h) = screen.get_size()
@@ -145,25 +148,25 @@ def UpdateDisplay():
         textRect = textRect.move(0,scaled(200))
         background.blit(tTitle,textRect)
     if (textBox1 != ""):
-        text = smallfont.render(textBox1,1, red)
+        text = smallfont.render(textBox1,1, grey1)
         background.blit(text,(scaled(100),scaled(450)))
     if (textBox2 != ""):
-        text = smallfont.render(textBox2,1, red)
+        text = smallfont.render(textBox2,1, grey1)
         background.blit(text,(scaled(100),scaled(550)))
     if (textBox3 != ""):
-        text = smallfont.render(textBox3,1, green)
+        text = smallfont.render(textBox3,1, grey1)
         background.blit(text,(scaled(100),scaled(700))) 
     if (Message1 != ""):
-        text = smallfont.render(Message1,1, green)
+        text = smallfont.render(Message1,1, grey2)
         background.blit(text,(scaled(200),scaled(200)))
     if (Message2 != ""):
-        text = smallfont.render(Message2,1, green)
+        text = smallfont.render(Message2,1, grey2)
         background.blit(text,(scaled(200),scaled(300)))
     if (Message3 != ""):
-        text = smallfont.render(Message3,1, green)
+        text = smallfont.render(Message3,1, grey2)
         background.blit(text,(scaled(200),scaled(600)))
     if (Message4 != ""):
-        text = smallfont.render(Message4,1, green)
+        text = smallfont.render(Message4,1, grey2)
         textRect = text.get_rect()
         textRect.centerx = background.get_rect().centerx
         textRect = textRect.move(0,scaled(850))
@@ -214,6 +217,17 @@ def UpdateDisplay():
         collageRect = collage.get_rect()
         collageRect.center = background.get_rect().center
         collageRect =collageRect.move(0,scaled(300))
+        background.blit(collage,collageRect)
+    if (state==0):
+        scale=0.5*mon_h/1000.0
+        collage = pygame.image.load('homepage.png')
+        picRect = collage.get_rect()
+        newWidth=int(picRect.size[0]*scale)
+        newHeight=int(picRect.size[1]*scale)
+        collage = pygame.transform.smoothscale(collage,(scaled(picRect.size[0]),scaled(picRect.size[1])))
+        collageRect = collage.get_rect()
+        collageRect.center = background.get_rect().center
+#        collageRect =collageRect.move(0,scaled(300))
         background.blit(collage,collageRect)
         
     #screen.blit(fit2screen(background), (0,0)) #print backgroud
@@ -379,9 +393,9 @@ def main(threadName, *args):
             
         if state == 0: #Welcome screen
             sleep(.05)
-            Title = "Welcome to the Documentation Photobooth!"
-            Message2 = "Press spacebar to get started"
-            showCEEO= True 
+#            Title = "Welcome to the Documentation Photobooth!"
+#            Message2 = "Press spacebar to get started"
+#            showCEEO= True 
         elif state == 1: #Take sample pic
             clearScreen()
             Message1=config.get('prompts','prompt0')

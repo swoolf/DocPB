@@ -3,7 +3,7 @@ driveFolder = Moo
 driveExt = M
 
 [settings]
-countdown = 1
+countdown = 4
 internetEnabled = False
 send2printer = False
 

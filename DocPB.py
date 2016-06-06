@@ -37,7 +37,7 @@ archiveDir='prints/'
 toUploadDir = 'notUploaded/'
 countdown = int(config.get('settings','countdown'))#seconds for countdown
 inDev = False 
-if True == config.get('settings','showCaption'): showCaption = True
+if 'True' == config.get('settings','showCaption'): showCaption = True
 else: showCaption = False
 aspectRatio = 1.0*4/3
 

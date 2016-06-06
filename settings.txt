@@ -4,7 +4,7 @@ driveExt = SF
 
 [settings]
 countdown = 1
-internetEnabled = False
+internetEnabled = True
 send2printer = True
 showCaption = True
 

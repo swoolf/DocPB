@@ -1,11 +1,12 @@
 [folders]
-driveFolder = Moo
-driveExt = M
+driveFolder = SummerFun 
+driveExt = SF
 
 [settings]
-countdown = 4
+countdown = 1
 internetEnabled = False
-send2printer = False
+send2printer = True
+showCaption = True
 
 [prompts]
 prompt0 = Take a practice picture!

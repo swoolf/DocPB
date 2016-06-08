@@ -306,7 +306,7 @@ def AssAndPrint(): #assembles collage and prints it
         
         font = ImageFont.truetype('Verdana.ttf', 35)
         draw = ImageDraw.Draw(forPrint)
-        draw.text((offset+20, 930),groupName + dash + groupDescription,(0,0,0),font=font)
+        draw.text((offset+20, 930),groupName + dash + groupDescription + "  "+ time.strftime("%D"),(0,0,0),font=font )
         
     else:
         iwidth = 400 
@@ -318,13 +318,16 @@ def AssAndPrint(): #assembles collage and prints it
         title.thumbnail((1000,1000))
         title=title.rotate(90)
         #thumbnail the 4 images 
-        for i in range (0,4):
+        if showCaption: j=1
+        else: j=0
+            
+        for i in range (j,j+4):
             images[i].thumbnail((640,480))
-
-        forPrint.paste(images[0],(20,10))
-        forPrint.paste(images[1],(20,30+480))
-        forPrint.paste(images[2],(40+640,10))
-        forPrint.paste(images[3],(40+640,30+480))
+        
+        forPrint.paste(images[j],(20,10))
+        forPrint.paste(images[j+1],(20,30+480))
+        forPrint.paste(images[j+2],(40+640,10))
+        forPrint.paste(images[j+3],(40+640,30+480))
         forPrint.paste(title,(50+640*2,10))
     
     if not os.path.exists(archiveDir): 

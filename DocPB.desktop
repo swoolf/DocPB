@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=DocPB
+Exec=/home/pi/june7/DocPB/DocPBtest
+terminal=true

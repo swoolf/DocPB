@@ -124,14 +124,13 @@ def clearScreen():
     global textBox1, textBox2, textBox3
     global Title, oldTitle
     global updateRect
-    global showLastPhoto, showLastCollage, showHorses, showCEEO
+    global showLastPhoto, showLastCollage, showHorses
    
     Message1=Message2=Message3=Numeral=textBox1=textBox2=textBox3=Title=Message4= ""
     oldTitle=""
     updateRect= ()
     showLastPhoto = False
     showHorses = False
-    showCEEO = False
     showLastCollage = False
     return
 
@@ -203,7 +202,7 @@ def UpdateDisplay():
         background.blit(collage,collageRect)
     if (showHorses):
         scale=0.5*mon_h/1000.0
-        collage = pygame.image.load('holdhorses.png')
+        collage = pygame.image.load('assets/holdhorses.png')
         picRect = collage.get_rect()
         newWidth=int(picRect.size[0]*scale)
         newHeight=int(picRect.size[1]*scale)
@@ -212,20 +211,9 @@ def UpdateDisplay():
         collageRect.center = background.get_rect().center
         collageRect =collageRect.move(0,scaled(200))
         background.blit(collage,collageRect)
-    if (showCEEO):
-        scale=0.5*mon_h/1000.0
-        collage = pygame.image.load('CEEO.png')
-        picRect = collage.get_rect()
-        newWidth=int(picRect.size[0]*scale)
-        newHeight=int(picRect.size[1]*scale)
-        collage = pygame.transform.smoothscale(collage,(newWidth,newHeight))
-        collageRect = collage.get_rect()
-        collageRect.center = background.get_rect().center
-        collageRect =collageRect.move(0,scaled(300))
-        background.blit(collage,collageRect)
     if (state==0):
         scale=0.5*mon_h/1000.0
-        collage = pygame.image.load('homepage.png')
+        collage = pygame.image.load('assets/homepage.png')
         picRect = collage.get_rect()
         newWidth=int(picRect.size[0]*scale)
         newHeight=int(picRect.size[1]*scale)
@@ -291,7 +279,7 @@ def AssAndPrint(): #assembles collage and prints it
         offset = 640-iwidth
         border = 10
         forPrint = Image.new("RGB", (pwidth, pheight), "white")
-        title = Image.open('general.jpg')
+        title = Image.open('assets/general.jpg')
         title=title.rotate(90)
         title.thumbnail((1000,1000))
         
@@ -304,7 +292,7 @@ def AssAndPrint(): #assembles collage and prints it
         forPrint.paste(images[4],(offset+40+iwidth,30+iheight))
         forPrint.paste(title,(offset+50+iwidth*2,10)) 
         
-        font = ImageFont.truetype('Verdana.ttf', 35)
+        font = ImageFont.truetype('assets/Verdana.ttf', 35)
         draw = ImageDraw.Draw(forPrint)
         draw.text((offset+20, 930),groupName + dash + groupDescription + "  "+ time.strftime("%D"),(0,0,0),font=font )
         
@@ -407,9 +395,6 @@ def main(threadName, *args):
             
         if state == 0: #Welcome screen
             sleep(.05)
-#            Title = "Welcome to the Documentation Photobooth!"
-#            Message2 = "Press spacebar to get started"
-#            showCEEO= True 
         elif state == 1: #Take sample pic
             clearScreen()
             Message1=config.get('prompts','prompt0')

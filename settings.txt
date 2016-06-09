@@ -1,9 +1,9 @@
 [folders]
-driveFolder = SummerFun 
-driveExt = SF
+driveFolder = PhotoBooth_Prints 
+driveExt = PB
 
 [settings]
-countdown = 1
+countdown = 3
 internetEnabled = True
 send2printer = True
 showCaption = True

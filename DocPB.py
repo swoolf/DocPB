@@ -302,7 +302,7 @@ def AssAndPrint(): #assembles collage and prints it
         border = 10
 
         forPrint = Image.new("RGB", (pwidth, pheight), "white")
-        title = Image.open('general.jpg')
+        title = Image.open('assets/general.jpg')
         title.thumbnail((1000,1000))
         title=title.rotate(90)
         #thumbnail the 4 images 
